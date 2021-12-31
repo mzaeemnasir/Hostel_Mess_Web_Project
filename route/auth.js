@@ -3,12 +3,6 @@ const res = require("express/lib/response");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 const Users = require("../model/userSchema");
-import App from "../frontend/src/App";
-
-router.get("/", (req, res) => {
-  req.render("App", { title: "Mess System" });
-  req.render("App");
-});
 // Register User Router
 router.post("/register", async (req, res) => {
   const { name, email, password, phoneNumber } = req.body;

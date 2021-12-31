@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import "./Login_Style.css";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Login = () => {
   const [user, setUser] = useState({
     email: "",
