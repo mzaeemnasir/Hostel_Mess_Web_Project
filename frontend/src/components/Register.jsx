@@ -3,6 +3,9 @@ import "./Register_Style.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import { useHistory } from "react-router-dom";
+import { connect } from "mongoose";
+
 const Register = () => {
   const [user, setUser] = useState({
     name: "",
@@ -19,7 +22,8 @@ const Register = () => {
     setUser({ ...user, [name]: value });
   };
 
-  const postDate = async (e) => {
+  const history = useHistory();
+  const postData = async (e) => {
     e.preventDefault();
     const { name, email, phoneNumber, password, confirmPassword } = user;
     const res = await fetch("/register", {
@@ -33,13 +37,17 @@ const Register = () => {
         confirmPassword,
       }),
     });
-
+    console.log(name, email, phoneNumber, password, confirmPassword);
     const data = await res.json();
-    if (data.status === 400) {
-      toast.error("Fill all the fields");
-    } else if (data.status === 200) {
-      toast.success("User registered successfully");
+    console.log(data);
+    if (data.error) {
+      window.alert(data.error);
+    } else if (data.success) {
+      window.alert(data.success);
+      history.push("/login");
     }
+
+    <ToastContainer />;
   };
   return (
     <>
@@ -59,7 +67,7 @@ const Register = () => {
             <h1 className="register-heading">Register</h1>
           </div>
           <div className="input-form">
-            <form>
+            <form method="POST">
               <div class="mb-4">
                 <input
                   id="inputName"
@@ -123,12 +131,16 @@ const Register = () => {
                   class="form-control rounded-pill border-0 shadow-sm px-4 text-primary"
                 />
               </div>
-              <div class="d-grid gap-2 mt-2">
+              <div class="form-group form-button">
                 <button
                   type="submit"
+                  id="register"
+                  name="register"
                   class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm"
+                  value="Register"
+                  onClick={postData}
                 >
-                  Register
+                  Register{" "}
                 </button>
                 <div>
                   Already have Account? <a href="/login">Sign In </a>

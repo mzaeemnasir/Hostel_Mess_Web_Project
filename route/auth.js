@@ -3,6 +3,17 @@ const res = require("express/lib/response");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 const Users = require("../model/userSchema");
+const Admin = require("../model/adminSchema");
+const nodemailer = require("nodemailer");
+
+router.get("/", async (req, res) => {
+  res.render("login");
+});
+
+router.get("/login", async (req, res) => {
+  res.render("login");
+});
+
 // Register User Router
 router.post("/register", async (req, res) => {
   const { name, email, password, phoneNumber } = req.body;
@@ -18,7 +29,7 @@ router.post("/register", async (req, res) => {
     }
     const newUser = new Users({ name, email, password, phoneNumber });
     await newUser.save();
-    res.status(201).json({ message: "User Registered Successfully" });
+    res.status(201).json({ success: "User Registered Successfully" });
     console.log(
       `User => ${name}  using Email => ${email}Registered Successfully`
     );
@@ -53,7 +64,62 @@ router.post("/login", async (req, res) => {
     if (user.password !== password) {
       return res.status(422).json({ error: "Invalid Credentials" });
     }
-    res.status(201).json({ message: "User Logged In Successfully" });
+    res.status(201).json({ success: "User Logged In Successfully" });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.post("/forget", async (req, res) => {
+  // send email to user of the password
+  const { email } = req.body;
+  if (!email) {
+    return res.status(400).json({ error: "Please Enter Your Email" });
+  }
+  try {
+    const user = await Users.findOne({ email: email });
+
+    if (!user) {
+      return res.status(422).json({ error: "Invalid Email" });
+    }
+
+    //node mailer Code HERe
+
+    console.log(user.password);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+// Admin Login Router
+router.post("/admin", async (req, res) => {
+  let token;
+  const { email, password } = req.body;
+  if (!email || !password) {
+    return res
+      .status(400)
+      .json({ error: "Please Fill are the Required Fields" });
+  }
+  console.log(email, password);
+  try {
+    const admin = await Admin.findOne({ email: email });
+    console.log(admin);
+    if (!admin) {
+      return res.status(422).json({ error: "Invalid Credentials" });
+    }
+    const token = await admin.generateAuthToken();
+    // The Token for the user is generated
+    // The Token will expire after 15 minutes
+    res.cookie("Admin_Token", token, {
+      expires: new Date(Date.now() + 900000),
+      httpsOnly: true,
+    });
+
+    console.log(token);
+    if (admin.password !== password) {
+      return res.status(422).json({ error: "Invalid Credentials" });
+    }
+    res.status(201).json({ success: "User Logged In Successfully" });
   } catch (err) {
     console.log(err);
   }

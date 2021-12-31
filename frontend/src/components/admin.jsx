@@ -1,7 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Login_Style.css";
+import { useHistory } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const admin = () => {
+const Admin = () => {
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  }); //state for email and password
+
+  const handleInput = (e) => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
+  };
+
+  const history = useHistory();
+  const PostDate = async (e) => {
+    e.preventDefault();
+    const { email, password } = user;
+    const res = await fetch("/admin", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (data.error) {
+      window.alert(data.error);
+      toast.error("Fill all the fields");
+    } else if (data.success) {
+      window.alert(data.success);
+      toast.success("Login Successful");
+      history.push("/dashboard");
+    }
+  };
+
   return (
     <>
       <h1 className="heading">Hostel Mess System</h1>
@@ -15,14 +53,17 @@ const admin = () => {
         </div>
         <div className="right-bar">
           <div className="login-form">
-            <h1 className="Login-heading">Admin Login</h1>
+            <p className="Login-heading">Admin Login</p>
           </div>
           <div className="input-form">
-            <form>
+            <form method="POST">
               <div class="mb-4">
                 <input
                   id="inputEmail"
                   type="email"
+                  name="email"
+                  value={user.email}
+                  onChange={handleInput}
                   placeholder="Email address"
                   required=""
                   autofocus=""
@@ -33,12 +74,14 @@ const admin = () => {
                 <input
                   id="inputPassword"
                   type="password"
+                  name="password"
+                  value={user.name}
+                  onChange={handleInput}
                   placeholder="Password"
                   required=""
                   class="form-control rounded-pill border-0 shadow-sm px-4 text-primary"
                 />
               </div>
-              <a href="/lostpassword">Lost Password? </a>
 
               <div class="form-check">
                 <input
@@ -51,18 +94,31 @@ const admin = () => {
                   Remember password
                 </label>
               </div>
+              <div className="mt-4"></div>
+
               <div class="d-grid gap-2 mt-2">
                 <button
                   type="submit"
                   class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm"
+                  onClick={PostDate}
                 >
                   Sign in
                 </button>
-                <div>
-                  New Member? <a href="/register">Sign Up </a>
-                </div>
               </div>
             </form>
+          </div>
+
+          <div class="d-grid gap-2 mt-2">
+            <button
+              type="submit"
+              class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm"
+              onClick={(e) => {
+                e.preventDefault();
+                window.location.href = "/forget";
+              }}
+            >
+              Forget Password
+            </button>
           </div>
         </div>
       </div>
@@ -70,4 +126,4 @@ const admin = () => {
   );
 };
 
-export default admin;
+export default Admin;

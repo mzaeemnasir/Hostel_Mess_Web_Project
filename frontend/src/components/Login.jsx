@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Login_Style.css";
-
+import { useHistory } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -15,7 +15,8 @@ const Login = () => {
     setUser({ ...user, [name]: value });
   };
 
-  const postDate = async (e) => {
+  const history = useHistory();
+  const PostDate = async (e) => {
     e.preventDefault();
     const { email, password } = user;
     const res = await fetch("/login", {
@@ -28,12 +29,14 @@ const Login = () => {
     });
 
     const data = await res.json();
-    if (data.status === 400) {
+
+    if (data.error) {
+      window.alert(data.error);
       toast.error("Fill all the fields");
-    } else if (data.status === 201) {
-      toast.success("User registered successfully");
-    } else if (data.status === 422) {
-      toast.error("Invalid email or password");
+    } else if (data.success) {
+      window.alert(data.success);
+      toast.success("Login Successful");
+      history.push("/home");
     }
   };
 
@@ -97,6 +100,7 @@ const Login = () => {
                 <button
                   type="submit"
                   class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm"
+                  onClick={PostDate}
                 >
                   Sign in
                 </button>
