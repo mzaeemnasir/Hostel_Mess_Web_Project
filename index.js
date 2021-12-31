@@ -10,8 +10,8 @@ app.use(express.json());
 app.use(require("./route/auth"));
 
 const Local = "mongodb://localhost:27017/hostel_mess";
-const DB = config.DB;
-// ("mongodb+srv://hitman:zaeem123@cluster0.rmbcl.mongodb.net/Hostel_Mess?retryWrites=true&w=majority");
+const DB =
+  "mongodb+srv://hitman:zaeem123@cluster0.rmbcl.mongodb.net/Hostel_Mess?retryWrites=true&w=majority";
 // // "mongodb+srv://hitman:zaeem123@cluster0.rmbcl.mongodb.net/Cluster0?retryWrites=true&w=majority";
 
 // Getting User schema
