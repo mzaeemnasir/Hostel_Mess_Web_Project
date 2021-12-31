@@ -1,17 +1,20 @@
 const express = require("express");
+const res = require("express/lib/response");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 const Users = require("../model/userSchema");
-router.get("/", (req, res) => {
-  res.send("Hello World");
-});
+import App from "../frontend/src/App";
 
+router.get("/", (req, res) => {
+  req.render("App", { title: "Mess System" });
+  req.render("App");
+});
 // Register User Router
 router.post("/register", async (req, res) => {
   const { name, email, password, phoneNumber } = req.body;
 
   if (!name || !email || !password || !phoneNumber) {
-    return res.status(422).json({ error: "Error in Registering User" });
+    return res.status(400).json({ error: "Error in Registering User" });
   }
 
   try {
@@ -21,7 +24,7 @@ router.post("/register", async (req, res) => {
     }
     const newUser = new Users({ name, email, password, phoneNumber });
     await newUser.save();
-    res.json({ message: "User Registered Successfully" });
+    res.status(201).json({ message: "User Registered Successfully" });
     console.log(
       `User => ${name}  using Email => ${email}Registered Successfully`
     );
@@ -35,7 +38,7 @@ router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
     return res
-      .status(422)
+      .status(400)
       .json({ error: "Please Fill are the Required Fields" });
   }
   console.log(email, password);

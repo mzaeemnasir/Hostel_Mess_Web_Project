@@ -1,7 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Register_Style.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    phoneNumber: "",
+    password: "",
+    confirmPassword: "",
+  }); //state for email and password
+
+  let name, value;
+  const handleInput = (e) => {
+    name = e.target.name;
+    value = e.target.value;
+    setUser({ ...user, [name]: value });
+  };
+
+  const postDate = async (e) => {
+    e.preventDefault();
+    const { name, email, phoneNumber, password, confirmPassword } = user;
+    const res = await fetch("/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name,
+        email,
+        phoneNumber,
+        password,
+        confirmPassword,
+      }),
+    });
+
+    const data = await res.json();
+    if (data.status === 400) {
+      toast.error("Fill all the fields");
+    } else if (data.status === 200) {
+      toast.success("User registered successfully");
+    }
+  };
   return (
     <>
       <div class="head">
@@ -25,6 +64,9 @@ const Register = () => {
                 <input
                   id="inputName"
                   type="text"
+                  name="name"
+                  value={user.name}
+                  onChange={handleInput}
                   placeholder="Name"
                   required=""
                   autofocus=""
@@ -35,6 +77,9 @@ const Register = () => {
                 <input
                   id="inputEmail"
                   type="email"
+                  name="email"
+                  value={user.email}
+                  onChange={handleInput}
                   placeholder="Email address"
                   required=""
                   autofocus=""
@@ -45,6 +90,9 @@ const Register = () => {
                 <input
                   id="inputPhNumber"
                   type="number"
+                  name="phoneNumber"
+                  value={user.phoneNumber}
+                  onChange={handleInput}
                   placeholder="Phone Number"
                   required=""
                   autofocus=""
@@ -55,6 +103,9 @@ const Register = () => {
                 <input
                   id="inputPassword"
                   type="password"
+                  name="password"
+                  value={user.password}
+                  onChange={handleInput}
                   placeholder="Password"
                   required=""
                   class="form-control rounded-pill border-0 shadow-sm px-4 text-primary"
@@ -64,6 +115,9 @@ const Register = () => {
                 <input
                   id="inputcnfrmPassword"
                   type="password"
+                  name="confirmPassword"
+                  value={user.confirmPassword}
+                  onChange={handleInput}
                   placeholder="Confirm Password"
                   required=""
                   class="form-control rounded-pill border-0 shadow-sm px-4 text-primary"

@@ -12,8 +12,8 @@ import Login from "./components/Login";
 const App = () => {
   return (
     <>
-      <Route path="/admin">
-        <admin />
+      <Route path="/">
+        <Login />
       </Route>
       <Route path="/login">
         <Login />
