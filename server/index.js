@@ -1,8 +1,9 @@
 const express = require("express");
+const dotenv = require("dotenv");
 const app = express();
-const port = 4000;
+const port = process.env.PORT || 3000;
 const mongoose = require("mongoose");
-
+dotenv.config({ path: "./config.env" });
 app.use(express.json());
 
 //Here we are connecting to the Routes
@@ -26,6 +27,12 @@ mongoose
   .catch((err) => {
     `Error in Connection ${err}`;
   });
+
+// For Heroku
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("frontend/build"));
+}
 
 app.listen(port, () => {
   console.log(`Hostel Mess is listening at http://localhost:${port}`);
