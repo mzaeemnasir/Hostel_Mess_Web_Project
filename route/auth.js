@@ -6,14 +6,6 @@ const Users = require("../model/userSchema");
 const Admin = require("../model/adminSchema");
 const nodemailer = require("nodemailer");
 
-router.get("/", async (req, res) => {
-  res.render("login");
-});
-
-router.get("/login", async (req, res) => {
-  res.render("login");
-});
-
 // Register User Router
 router.post("/register", async (req, res) => {
   const { name, email, password, phoneNumber } = req.body;
@@ -37,6 +29,7 @@ router.post("/register", async (req, res) => {
     console.log(err);
   }
 });
+
 // Login User Router
 router.post("/login", async (req, res) => {
   let token;

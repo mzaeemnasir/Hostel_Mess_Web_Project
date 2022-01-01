@@ -1,45 +1,28 @@
 import React from "react";
-import SideNav, {
-  Toggle,
-  Nav,
-  NavItem,
-  NavIcon,
-  NavText,
-} from "@trendmicro/react-sidenav";
-
-// Be sure to include styles at some point, probably during your bootstraping
-import "@trendmicro/react-sidenav/dist/react-sidenav.css";
+import "./Home.css";
+import Navbar from "./Navbar";
 
 function Home() {
   return (
     <>
-      <SideNav
-        onSelect={(selected) => {
-          // your coode here
-        }}
-      >
-        <SideNav.Toggle />
-        <SideNav.Nav defaultSelected="home">
-          <NavItem eventKey="home">
-            <NavIcon>
-              <i class="zmdi zmdi-home" />
-            </NavIcon>
-            <NavText>Home Page</NavText>
-          </NavItem>
-          <NavItem eventKey="Mess">
-            <NavIcon>
-              <i class="zmdi zmdi-chart"></i>
-            </NavIcon>
-            <NavText>Mess</NavText>
-          </NavItem>
-          <NavItem eventKey="Attandance">
-            <NavIcon>
-              <i class="zmdi zmdi-account-box"></i>
-            </NavIcon>
-            <NavText>Attandance</NavText>
-          </NavItem>
-        </SideNav.Nav>
-      </SideNav>
+      <Navbar />
+      <h1 className="mt-5"> Mess Registration userName </h1>
+      <button className="btn btn-success mt-5 " id="btn">
+        {" "}
+        Register Into Breakfast{" "}
+      </button>
+      <hr />
+      <button className="btn btn-success" id="btn">
+        {" "}
+        Register Into Lunch     
+      </button>
+      <hr />
+      <button className="btn btn-success" id="btn">
+        {" "}
+        Register Into Dinner    
+      </button>
+      <hr />
+      <h1>Calander:</h1>
     </>
   );
 }

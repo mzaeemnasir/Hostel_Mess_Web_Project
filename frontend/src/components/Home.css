@@ -1,0 +1,16 @@
+.Row {
+  margin-left: 20%;
+}
+
+.Box {
+  border-color: red;
+  border: 2px solid;
+  width: 200px;
+  height: 200px;
+  margin-top: 10%;
+  margin-left: 10%;
+}
+
+#btn {
+  margin-left: 40%;
+}
