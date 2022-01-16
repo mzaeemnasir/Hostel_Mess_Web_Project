@@ -1,9 +1,41 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Home.css";
 import Navbar from "./Navbar";
+import { useHistory } from "react-router-dom";
+
+// import Login from "./Login";
 
 // Main component
 function Home() {
+  const history = useHistory();
+
+  const HomePage = async () => {
+    try {
+      const res = await fetch("/home", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      const data = await res.json();
+      console.log(data);
+      alert(data.email);
+      if (!res.status === 200) {
+        const error = new Error(res.error);
+        throw error;
+      }
+    } catch (err) {
+      console.log(err);
+      history.push("/login");
+    }
+  };
+
+  useEffect(() => {
+    HomePage();
+  }, []);
+
   const current = new Date();
   const date = `${current.getDate()} ${current.toLocaleString("default", {
     month: "long",

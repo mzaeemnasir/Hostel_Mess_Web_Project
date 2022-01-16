@@ -52,8 +52,6 @@ router.post("/login", async (req, res) => {
       expires: new Date(Date.now() + 900000),
       httpsOnly: true,
     });
-
-    console.log(token);
     if (user.password !== password) {
       return res.status(422).json({ error: "Invalid Credentials" });
     }
@@ -118,4 +116,7 @@ router.post("/admin", async (req, res) => {
   }
 });
 
+router.get("/home", (res, req) => {
+  console.log("Authenticated");
+});
 module.exports = router;
