@@ -44,6 +44,7 @@ function Home() {
     month: "long",
   })}, ${current.getFullYear()}`;
   const time = `${current.getHours()}:${current.getMinutes()}`;
+
   return (
     <>
       <Navbar />
