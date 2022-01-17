@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Home.css";
 import Navbar from "./Navbar";
 import { useHistory } from "react-router-dom";
@@ -8,6 +8,9 @@ import { useHistory } from "react-router-dom";
 // Main component
 function Home() {
   const history = useHistory();
+
+  // Storing the data to the useState
+  const [data, setData] = useState({});
 
   const HomePage = async () => {
     try {
@@ -21,7 +24,7 @@ function Home() {
       });
       const data = await res.json();
       console.log(data);
-      alert(data.email);
+      setData(data);
       if (!res.status === 200) {
         const error = new Error(res.error);
         throw error;
@@ -54,6 +57,7 @@ function Home() {
         {/* Displaying  Current Date  */}
         <div className="date">
           <h2>{date}</h2>
+          <h3 className="userName"> Welcome {data.name}</h3>
         </div>
         <p>
           <b>Note:</b> This is a demo version of Mess Registration. You can use

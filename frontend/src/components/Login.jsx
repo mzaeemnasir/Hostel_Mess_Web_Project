@@ -47,7 +47,7 @@ const Login = () => {
         <div className="left-bar">
           <img
             className="side-img"
-            src="https://lh3.googleusercontent.com/proxy/FaBBnEJzuJX4uIerfvCD8J_LN4vhio76gRiPPhc3QH3TeAeTDjtHHtpm_9qtWSAUx36Dj2eJrdFJkhnDlfTzneK6hera5QWJPpcEEQtD-DDAKe3s8g8qQOzv-6nyQV_W2PGy218bHA"
+            src="https://images.indianexpress.com/2014/12/hostel-mess.jpg?w=600"
             alt="logo"
           />
         </div>

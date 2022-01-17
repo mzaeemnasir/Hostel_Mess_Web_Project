@@ -5,6 +5,8 @@ const router = express.Router();
 const Users = require("../model/userSchema");
 const Admin = require("../model/adminSchema");
 const nodemailer = require("nodemailer");
+const authenticate = require("../middleware/authenticate");
+var smtpTransport = require("nodemailer-smtp-transport"); // this is important
 
 // Register User Router
 router.post("/register", async (req, res) => {
@@ -116,7 +118,58 @@ router.post("/admin", async (req, res) => {
   }
 });
 
-router.get("/home", (res, req) => {
+router.get("/home", authenticate, (res, req) => {
   console.log("Authenticated");
+  req.send(res.rootUser);
 });
+
+router.post("/reset", async (req, res) => {
+  const { email } = req.body;
+  console.log("User Email ", email, " Wants to Reset Password");
+  if (!email) {
+    return res.status(400).json({ error: "Please Enter Your Email" });
+  }
+  try {
+    const user = await Users.findOne({ email: email });
+    if (!user) {
+      console.log("User Not Found");
+      return res.status(422).json({ error: "Invalid Email" });
+    }
+    //Node Mailer // Send Email to the user
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
+      requireTLS: true,
+      auth: {
+        user: "mzaeemnasir07@gmail.com" /* Email */,
+        pass: "zaeem@123@" /* Password */,
+      },
+    });
+
+    const mailOptions = {
+      from: "mzaeemnasir07@gmail.com",
+      to: email,
+      subject: "Hostel Mess Reset Password",
+      text: "Your Password is " + user.password,
+    };
+
+    console.log("User Found Sending Email");
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+        return res.status(422).json({ error: "Error in Sending Email" });
+      } else {
+        console.log("Email sent: " + info.response);
+        return res.status(201).json({ success: "Email Sent" });
+      }
+    });
+    // Send Email to the user
+    console.log(user.password);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 module.exports = router;

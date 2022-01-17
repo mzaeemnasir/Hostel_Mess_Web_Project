@@ -3,6 +3,10 @@ const dotenv = require("dotenv");
 const app = express();
 const port = process.env.PORT || 5000;
 const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
+
+app.use(cookieParser());
+
 dotenv.config({ path: "./config.env" });
 app.use(express.json());
 //Here we are connecting to the Routes

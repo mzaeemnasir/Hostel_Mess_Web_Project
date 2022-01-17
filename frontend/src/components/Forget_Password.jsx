@@ -17,8 +17,9 @@ const Forget_Password = () => {
   const history = useHistory();
   const PostRequest = async (e) => {
     e.preventDefault();
+    console.log(email);
     const { email } = user;
-    const res = await fetch("/forget", {
+    const res = await fetch("/reset", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

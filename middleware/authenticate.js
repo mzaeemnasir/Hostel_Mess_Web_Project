@@ -1,11 +1,12 @@
 const jwt = require("jsonwebtoken");
 const User = require("../model/userSchema");
+const cookies = require("cookie-parser");
+const { append } = require("express/lib/response");
 
 const authenticate = async (req, res, next) => {
   try {
-    const token = req.cookies.jwtoken;
+    const token = req.cookies.Student_Token;
     console.log(token);
-    alert(token);
     const VerifiedToken = jwt.verify(token, "thisismysecretkey");
     const rootUser = await User.findOne({
       _id: VerifiedToken._id,
