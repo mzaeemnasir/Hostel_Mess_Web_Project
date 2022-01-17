@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import "./Forget_Password.css";
 import { useHistory } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Alert from "react-bootstrap/Alert";
 
 const Forget_Password = () => {
   const [user, setUser] = useState({
@@ -17,7 +14,6 @@ const Forget_Password = () => {
   const history = useHistory();
   const PostRequest = async (e) => {
     e.preventDefault();
-    console.log(email);
     const { email } = user;
     const res = await fetch("/reset", {
       method: "POST",
@@ -32,7 +28,6 @@ const Forget_Password = () => {
       window.alert(data.error);
     } else if (data.success) {
       window.alert(data.success);
-      toast.success("Password Reset Link Sent to your Email");
       history.push("/login");
     }
   };

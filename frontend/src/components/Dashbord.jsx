@@ -3,13 +3,13 @@ import React, { Component } from "react";
 import "./Dashbord.css";
 import Navbar from "./Admin_Nav_bar";
 import { useHistory } from "react-router-dom";
+
 function Dashbord() {
   // Displaying Time
   const current = new Date();
   const date = `${current.getDate()} ${current.toLocaleString("default", {
     month: "long",
   })}, ${current.getFullYear()}`;
-  const time = `${current.getHours()}:${current.getMinutes()}`;
   const history = useHistory();
 
   return (

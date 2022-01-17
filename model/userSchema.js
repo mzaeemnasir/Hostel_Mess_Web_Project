@@ -25,6 +25,20 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+
+  complaints: [
+    {
+      complaint: {
+        type: String,
+        required: false,
+      },
+      date: {
+        type: Date,
+        required: false,
+      },
+    },
+  ],
+
   tokens: [
     {
       token: {

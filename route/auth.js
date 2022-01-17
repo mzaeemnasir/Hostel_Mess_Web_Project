@@ -172,4 +172,38 @@ router.post("/reset", async (req, res) => {
   }
 });
 
+// Getting Authentication and sending Email
+router.get("/complaints", authenticate, (req, res) => {
+  console.log("Authenticated - Complaints");
+  res.send(req.rootUser);
+});
+
+// Getting Post the Complaints
+router.post("/complaints", (req, res) => {
+  console.log("Authenticated - Posting Complaints");
+  const data = req.body.complaint;
+  const complaint = data.complaint;
+  const email = data.email;
+  const date = data.date;
+  const time = data.time;
+  // Sending Complaints to the Database
+  const user = Users.findOne({ email: email });
+  if (!user) {
+    return res.status(422).json({ error: "Invalid Email" });
+  }
+  const newComplaint = {
+    complaint: complaint,
+    email: user.email,
+    date: date,
+    time: time,
+  };
+  console.log(newComplaint);
+  console.log("Complaint Posted");
+  // Adding the Complaints to the Database
+  newComplaint.save().then((complaint) => {
+    console.log(complaint);
+    res.status(201).json({ success: "Complaint Posted" });
+  });
+});
+
 module.exports = router;

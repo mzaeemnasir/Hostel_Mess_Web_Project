@@ -1,9 +1,9 @@
 // This View will be used by Admin to view all the Complaints
 // This View Will get all the Complaints from the database and display them
-import React, { Component, useState, useEffect } from "react";
+import React from "react";
 // import "./Admin_Complaints.css";
 import Navbar from "./Admin_Nav_bar";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
 function admincomplaints() {
   return (

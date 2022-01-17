@@ -13,8 +13,10 @@ const authenticate = async (req, res, next) => {
       "tokens.token": token,
     });
     if (!rootUser) {
+      console.log("Invalid Token");
       throw new Error("User Not Found");
     }
+    console.log("Valid Token");
     req.rootUser = rootUser;
     req.token = token;
     req.userID = rootUser._id;

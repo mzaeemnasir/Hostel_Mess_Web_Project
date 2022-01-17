@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import "./Login_Style.css";
 import { useHistory } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const [user, setUser] = useState({
@@ -32,10 +30,8 @@ const Login = () => {
 
     if (data.error) {
       window.alert(data.error);
-      toast.error("Fill all the fields");
     } else if (data.success) {
       window.alert(data.success);
-      toast.success("Login Successful");
       history.push("/home");
     }
   };

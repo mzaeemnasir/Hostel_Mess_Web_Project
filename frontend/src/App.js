@@ -12,7 +12,9 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Dashbord from "./components/Dashbord";
 import adminComplaints from "./components/adminComplaints";
 import Reports from "./components/reports";
-
+import About from "./components/about";
+import Complaints from "./components/Complaints";
+import Profile from "./components/Profile";
 //import FormValidation from './FormValidation';
 const App = () => {
   return (
@@ -20,6 +22,7 @@ const App = () => {
       <Router>
         <Switch>
           <Route path="/" exact component={Login} />
+          <Route path="/complaints" exact component={Complaints} />
           <Route path="/admincomplaints" exact component={adminComplaints} />
           <Route path="/login" exact component={Login} />
           <Route path="/register" exact component={Register} />
@@ -28,6 +31,8 @@ const App = () => {
           <Route path="/home" exact component={Home} />
           <Route path="/dashboard" exact component={Dashbord} />
           <Route path="/reports" exact component={Reports} />
+          <Route path="/profile" exact component={Profile} />
+          <Route path="/about" exact component={About} /> {/* Done */}
         </Switch>
       </Router>
     </>
