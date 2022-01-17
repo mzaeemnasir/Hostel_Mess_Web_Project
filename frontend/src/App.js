@@ -15,6 +15,7 @@ import Reports from "./components/reports";
 import About from "./components/about";
 import Complaints from "./components/Complaints";
 import Profile from "./components/Profile";
+import Attandances from "./components/attandances";
 //import FormValidation from './FormValidation';
 const App = () => {
   return (
@@ -33,6 +34,7 @@ const App = () => {
           <Route path="/reports" exact component={Reports} />
           <Route path="/profile" exact component={Profile} />
           <Route path="/about" exact component={About} /> {/* Done */}
+          <Route path="/attendances" exact component={Attandances} />
         </Switch>
       </Router>
     </>

@@ -1,12 +1,12 @@
-// User Profile View
+// User Attandances
 
 import React from "react";
-// import "./Profile.css";
+// import "./Attandances.css";
 import Navbar from "./Navbar";
 import { useHistory } from "react-router-dom";
 
 // Main component
-function Profile() {
+function Attandances() {
   return (
     <>
       <Navbar />
@@ -14,4 +14,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default Attandances;
